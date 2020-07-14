@@ -17,17 +17,7 @@ class TodoListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let newItem = Item()
-        newItem.title = "Find Mike"
-        itemArray.append(newItem)
-        
-        let newItem2 = Item()
-        newItem2.title = "Buy Eggos"
-        itemArray.append(newItem2)
-        
-        let newItem3 = Item()
-        newItem3.title = "Destroy Demogorgon"
-        itemArray.append(newItem3)
+        loadItems()
         
     }
 
@@ -105,6 +95,21 @@ class TodoListViewController: UITableViewController {
         }
         
         self.tableView.reloadData()
+        
+    }
+    
+    func loadItems() {
+        
+        // Decode .plist into itemArray
+        let decoder = PropertyListDecoder()
+        
+        guard let data = try? Data(contentsOf: dataFilePath!) else { return }
+        
+        do {
+            itemArray = try decoder.decode([Item].self, from: data)
+        } catch {
+            print("Error decoding the .plis, \(error)")
+        }
         
     }
     
