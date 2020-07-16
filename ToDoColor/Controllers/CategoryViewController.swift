@@ -39,6 +39,21 @@ class CategoryViewController: UITableViewController {
     }
     
     // MARK: - TableViewDelegate methods
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        performSegue(withIdentifier: "goToItems", sender: self)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let destinationVC = segue.destination as! TodoListViewController
+        guard let indexPath = tableView.indexPathForSelectedRow else { return }
+        
+        destinationVC.selectedCategory = categoryArray[indexPath.row]
+        
+    }
 
     // MARK: - Add new category
     
